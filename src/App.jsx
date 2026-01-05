@@ -1,12 +1,17 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./components/home"; // Ensure correct file name and path
-import Destination from "./components/destination"; // Ensure correct file name and path
-import About from "./components/about"; // Ensure correct file name and path
-import ContactUs from "./components/contact"; // Ensure correct file name and path
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+
+// Pages
+import HomePage from "./components/home";
+import Destination from "./components/destination";
+import About from "./components/about";
+import ContactUs from "./components/contact";
+
+// Layout
 import Navbar from "./components/nav";
 import Footer from "./components/footer";
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+
+// Destination Pages
 import COLOMBU from "./components/Destination page/colombo";
 import Galle from "./components/Destination page/galle";
 import Kandy from "./components/Destination page/kandy";
@@ -26,36 +31,57 @@ import Ella from "./components/Destination page/ella";
 import Pasikudah from "./components/Destination page/pasikudah";
 import Haputale from "./components/Destination page/haputale";
 
+// Styles
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// Animation Wrapper
+import PageWrapper from "./components/PageWrapper";
+import ScrollToTop from "./components/ScrollToTop";
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
+        <Route path="/destination" element={<PageWrapper><Destination /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><ContactUs /></PageWrapper>} />
+
+        <Route path="/colombo" element={<PageWrapper><COLOMBU /></PageWrapper>} />
+        <Route path="/kandy" element={<PageWrapper><Kandy /></PageWrapper>} />
+        <Route path="/nuwaraliya" element={<PageWrapper><Nuwaraliya /></PageWrapper>} />
+        <Route path="/galle" element={<PageWrapper><Galle /></PageWrapper>} />
+        <Route path="/sigiriya" element={<PageWrapper><Sigirya /></PageWrapper>} />
+        <Route path="/yala" element={<PageWrapper><Yala /></PageWrapper>} />
+        <Route path="/mirissa" element={<PageWrapper><Mirissa /></PageWrapper>} />
+        <Route path="/anuradhapura" element={<PageWrapper><Anuradhapura /></PageWrapper>} />
+        <Route path="/trinco" element={<PageWrapper><Trinco /></PageWrapper>} />
+        <Route path="/horton" element={<PageWrapper><Horton /></PageWrapper>} />
+        <Route path="/jaffna" element={<PageWrapper><Jaffna /></PageWrapper>} />
+        <Route path="/bentota" element={<PageWrapper><Bentota /></PageWrapper>} />
+        <Route path="/arugambey" element={<PageWrapper><Arugambey /></PageWrapper>} />
+        <Route path="/dambulla" element={<PageWrapper><Dambulla /></PageWrapper>} />
+        <Route path="/kithulgala" element={<PageWrapper><Kithulgala /></PageWrapper>} />
+        <Route path="/ella" element={<PageWrapper><Ella /></PageWrapper>} />
+        <Route path="/pasikudah" element={<PageWrapper><Pasikudah /></PageWrapper>} />
+        <Route path="/haputhale" element={<PageWrapper><Haputale /></PageWrapper>} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <Navbar /> {/* Add Navbar inside the App component */}
-      <div className="bg-gray-100 min-h-screen pt-20"> {/* Ensure content doesn't overlap navbar */}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/destination" element={<Destination />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/colombo" element={<COLOMBU/>} />
-          <Route path="/kandy" element={<Kandy/>} />
-          <Route path="/nuwaraliya" element={<Nuwaraliya/>} />
-          <Route path="/galle" element={<Galle/>} />
-          <Route path="/sigiriya" element={<Sigirya/>} />
-          <Route path="/yala" element={<Yala/>} />
-          <Route path="/mirissa" element={<Mirissa/>} />
-          <Route path="/anuradhapura" element={<Anuradhapura/>} />
-          <Route path="/trinco" element={<Trinco/>} />
-          <Route path="/horton" element={<Horton/>} />
-          <Route path="/jaffna" element={<Jaffna/>} />
-          <Route path="/bentota" element={<Bentota/>} />
-          <Route path="/arugambey" element={<Arugambey/>} />
-          <Route path="/dambulla" element={<Dambulla/>} />
-          <Route path="/kithulgala" element={<Kithulgala/>} />
-          <Route path="/ella" element={<Ella/>} />
-          <Route path="/pasikudah" element={<Pasikudah/>} />
-          <Route path="/haputhale" element={<Haputale/>} />
-        </Routes>
-        <Footer/>
+      <ScrollToTop />
+      <Navbar />
+
+      <div className="bg-gray-100 min-h-screen pt-20">
+        <AnimatedRoutes />
+        <Footer />
       </div>
     </Router>
   );
